@@ -1,0 +1,58 @@
+1. Create an m x n matrix with replicate(m, rnorm(n)) with m=10 column vectors of n=10 elements each, constructed with rnorm(n), which creates random normal numbers.
+
+Then we transform it into a dataframe (thus 10 observations of 10 variables) and perform an algebraic operation on each element using a nested for loop: at each iteration, every element referred by the two indexes is incremented by a sinusoidal function, compare the vectorized and non-vectorized form of creating the solution and report the system time differences.
+
+set.seed(10)
+m=10
+n=10
+
+#Set the seed of R‘s random number generator, which is useful for creating simulations or random objects that can be reproduced.
+# Create matrix of normal random numbers
+mymat <- replicate(m, rnorm(n))
+# Transform into data frame
+mydframe <- data.frame(mymat)
+
+Code:
+
+> set.seed(10)
+> m=10
+> n=10
+> mymat<-replicate(m,rnorm(n)) 
+> mydframe<-data.frame(mymat)
+> mydframe<-mydframe+10*sin(0.75*pi)
+> mydframe
+         X1       X2       X3       X4       X5       X6       X7       X8
+1  7.089814 8.172847 6.474757 5.217327 8.157619 6.670430 5.833473 7.451990
+2  6.886815 7.826849 4.885781 6.993122 6.308523 6.736511 6.614892 5.640641
+3  5.699737 6.832834 6.396202 8.039634 6.242405 8.439022 6.240745 6.022622
+4  6.471900 8.058513 4.952007 7.255994 7.905542 9.208835 7.411183 6.852564
+5  7.365613 7.812458 5.805870 5.691124 6.103416 7.576887 8.137444 5.581132
+6  7.460862 7.160415 6.697406 5.635553 7.042252 7.857410 8.287194 8.243774
+7  5.862992 6.116124 6.383512 7.433155 7.303593 6.168856 7.806758 5.591241
+8  6.707392 6.875917 6.198909 5.311981 6.769859 7.603965 6.589859 6.640680
+9  5.444395 7.996589 6.969307 6.746524 6.393453 6.425174 7.633813 6.019429
+10 6.814589 7.554046 6.817287 6.419505 7.726295 7.362055 5.824748 8.593654
+         X9      X10
+1  7.663896 6.654713
+2  6.848406 6.879585
+3  7.783962 7.140613
+4  7.787669 8.226416
+5  7.511310 7.666025
+6  7.229898 5.651423
+7  7.730832 5.464391
+8  9.291587 7.963994
+9  5.887123 7.219236
+10 6.997112 8.298096
+> str(mydframe)
+'data.frame':	10 obs. of  10 variables:
+ $ X1 : num  7.09 6.89 5.7 6.47 7.37 ...
+ $ X2 : num  8.17 7.83 6.83 8.06 7.81 ...
+ $ X3 : num  6.47 4.89 6.4 4.95 5.81 ...
+ $ X4 : num  5.22 6.99 8.04 7.26 5.69 ...
+ $ X5 : num  8.16 6.31 6.24 7.91 6.1 ...
+ $ X6 : num  6.67 6.74 8.44 9.21 7.58 ...
+ $ X7 : num  5.83 6.61 6.24 7.41 8.14 ...
+ $ X8 : num  7.45 5.64 6.02 6.85 5.58 ...
+ $ X9 : num  7.66 6.85 7.78 7.79 7.51 ...
+ $ X10: num  6.65 6.88 7.14 8.23 7.67 ...
+
